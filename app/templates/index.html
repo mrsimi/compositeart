@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <p style="font-family: 'Ojuju', sans-serif;">Photomosaic with diverse compositions</p>
+    <div>
+        <p class="heading">Make Stunning Photo Mosaic with diverse Composition</p>
+        <p class="info">Turn your favorite photos into stunning mosaics with our easy-to-use photo mosaic app.   <br> <br>
+            Select any image from your gallery to be the focal point of your mosaic.  
+            Select from the composition option and enjoy stunning results.</p>
+        
+    </div>
+    <div>
+        <form  id="index" action="/" method="post" enctype="multipart/form-data">
+            <label for="">select image:</label> <br>
+            <input  id="single_file" type="file" name="single_file" accept="image/*"
+            required> <br> <br>
+            <label>select composition: </label> <br>
+            <select id="selected_filter" name="selected_filter">
+                <option value="ascii">ascii</option>
+                <!-- <option value="emoji">emoji</option> -->
+            </select> <br> <br>
+            <input type="submit" value="generate mosaic" class="submit-btn"/>
+        </form>
+    </div>
+    <p style="padding-bottom: 50px;">This app was created by <a href="https://twitter.com/0xfatherstreet">simi</a></span></p>
+</div>
+<div class="second-part">
+    <a class="feedback-btn" href="mailto:simi.photomosaic@gmail.com?Subject=Feedback%20for%20Photo%20Mosaic%20Creator">Give Feedback</a> <br>
+
+    <img src="https://media.istockphoto.com/id/1333460374/photo/african-megacity-lagos-nigeria.jpg?s=612x612&w=0&k=20&c=Gu5TRHGNLRRF43YFMlDFnpkk7TBz00U8olxUqsoeiw8=">
+</div>
+
+{% endblock %}

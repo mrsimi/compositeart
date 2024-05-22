@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR03MN9QRH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZR03MN9QRH');
+    </script>
+    <meta charset="UTF-8">
+    <title>Photomosaic</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@200..800&family=Raleway+Dots&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            font-family: "Raleway Dots", sans-serif
+        }
+
+        body {
+            padding: 100px 400px;
+            margin: 0px;
+            color: #f7f4e9;
+            background-color: #141414;
+            ;
+            display: flex;
+            height: 70vh;
+            align-self: center;
+            gap: 200px;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .heading {
+            padding-top: 100px;
+            font-size: 45px;
+            font-family: "Ojuju", sans-serif;
+            font-optical-sizing: auto;
+            text-transform: lowercase;
+        }
+
+        .info,
+        label {
+            font-size: 20px;
+            width: 70%;
+            text-transform: lowercase;
+        }
+
+        form {
+            width: 500px;
+            padding: 20px 0px;
+        }
+
+        select {
+            padding: 10px 8px;
+            width: 100%;
+            font-family: sans-serif;
+        }
+
+        input::file-selector-button {
+            padding: 10px 8px;
+            width: 200px;
+        }
+
+        .submit-btn {
+            padding: 10px 8px;
+            width: 100%;
+            font-size: 24px;
+            color: #f7f4e9;
+            background-color: #141414;
+            ;
+            border: 1px solid #f7f4e9;
+        }
+
+        .feedback-btn {
+            color: #f7f4e9;
+            background-color: #141414;
+            ;
+            float: right;
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            border: 1px solid #f7f4e9;
+            font-size: 18px;
+        }
+
+        a {
+            color: #f7f4e9;
+        }
+
+        option {
+            font-weight: 900;
+        }
+
+        @media screen and (max-width: 962px) {
+            .heading {
+                padding-top: 30px;
+                font-size: 40px;
+            }
+
+            .second-part {
+                display: none;
+            }
+
+            body {
+                padding: 50px;
+                display: block;
+                gap: 0px;
+            }
+
+            .info,
+            label {
+                width: 100%;
+                font-size: 20px;
+            }
+
+            input::file-selector-button {
+                padding: 10px 8px;
+                width: 200px;
+                font-size: 15px;
+            }
+
+            .submit-btn {
+                width: 90%;
+                margin-bottom: 50px;
+                font-size: 22px;
+            }
+
+            select {
+                padding: 10px 8px;
+                width: 90%;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %} {% endblock %}
+</body>
+
+</html>
