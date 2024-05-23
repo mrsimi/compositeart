@@ -14,8 +14,9 @@
     <div>
         <form  id="index" action="/" method="post" enctype="multipart/form-data">
             <label for="">select image:</label> <br>
-            <input  id="single_file" type="file" name="single_file" accept="image/*"
+            <input  id="single_file" type="file" name="single_file" onchange="validateSize(this)" accept="image/*"
             required> <br> <br>
+            <span id="errorMessage" style="color: yellow;"></span> <br> <br>
             <label>select composition: </label> <br>
             <select id="selected_filter" name="selected_filter">
                 <option value="ascii">ascii</option>
@@ -31,5 +32,29 @@
 
     <img src="{{ url_for('static', filename='mosaic.jpg') }}">
 </div>
+
+<script>
+    document.getElementById('single_file').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const maxSizeInBytes = 3 * 1024 * 1024; // 2MB in bytes
+
+        if (file) {
+            if (file.size > maxSizeInBytes) {
+                document.getElementById('errorMessage').textContent = 
+                    'File size exceeds 2MB. Please select a smaller file.';
+                event.target.value = ''; // Clear the input
+            } else {
+                const fileSizeInBytes = file.size;
+                const fileSizeInKB = (fileSizeInBytes / 1024).toFixed(2);
+                const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2);
+                document.getElementById('errorMessage').textContent = '';
+            }
+        } else {
+            document.getElementById('fileSize').textContent = 'No file selected.';
+            document.getElementById('errorMessage').textContent = '';
+        }
+    });
+   
+</script>
 
 {% endblock %}
