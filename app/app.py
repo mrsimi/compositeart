@@ -13,7 +13,8 @@ def upload_form():
         single_file = request.files['single_file']
         selected_filter = request.form['selected_filter']
 
-        output_url = apply_filter(single_file, temp_dir.name, selected_filter)
+        template_path = os.path.join(app.root_path, 'static/filters/emoji')
+        output_url = apply_filter(single_file, temp_dir.name, selected_filter, template_path)
         print(output_url)
         return send_file(output_url, as_attachment=True)
     

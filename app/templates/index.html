@@ -19,7 +19,7 @@
                 <label>select composition: </label> <br>
                 <select id="selected_filter" name="selected_filter">
                     <option value="ascii">ascii</option>
-                    <!-- <option value="emoji">emoji</option> -->
+                    <option value="emoji">emoji</option>
                 </select> <br> <br>
                 <input type="submit" value="generate mosaic" class="submit-btn"/>
             </form>
@@ -27,10 +27,7 @@
             <p style="padding: 50px 0px;">This app was created by <a href="https://twitter.com/0xfatherstreet">simi</a></span></p>
     </div>
     <div class="secondpart">
-        <div>
-            <a class="feedback-btn" href="mailto:simi.photomosaic@gmail.com?Subject=Feedback%20for%20Photo%20Mosaic%20Creator">Give Feedback</a> <br>
-        </div>
-
+        
     <img class="sample-image" src="{{ url_for('static', filename='mosaic.jpg') }}">
     </div>
 </div>

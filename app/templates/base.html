@@ -34,7 +34,7 @@
 
     .container {
         display: flex;
-        padding: 300px;
+        padding: 200px;
     }
 
     .firstpart {
@@ -97,7 +97,18 @@
     }
     a{
         color: #f7f4e9;
-        text-decoration: underline;
+        text-decoration: none;
+    }
+    nav{
+        padding: 10px 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        border-bottom: 1px solid #f7f4e9;
+    }
+    .other-content{
+        padding: 100px;
     }
     
     @media screen and (max-width: 1200px) {
@@ -105,7 +116,9 @@
             flex-direction: column;
             padding: 30px;
         }
-
+        .other-content{
+            padding: 30px;
+        }
         .firstpart,
         .secondpart {
             width: 100%;
@@ -132,6 +145,13 @@
 </style>
 
 <body>
+    <nav>
+        <p>photomosaic.xyz</p>
+        <p>about</p>
+        <div>
+            <a href="mailto:simi.photomosaic@gmail.com?Subject=Feedback%20for%20Photo%20Mosaic%20Creator">give feedback</a> <br>
+        </div>
+    </nav>
     {% block content %} {% endblock %}
 </body>
 
