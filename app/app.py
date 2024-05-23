@@ -14,7 +14,8 @@ def upload_form():
         selected_filter = request.form['selected_filter']
 
         output_url = apply_filter(single_file, temp_dir.name, selected_filter)
-        return #send_file(output_url, as_attachment=True)
+        print(output_url)
+        return send_file(output_url, as_attachment=True)
     
     return render_template('index.html')
 

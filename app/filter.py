@@ -36,6 +36,6 @@ def ascii(image, output_dir):
             #text_file.write(getChar(h))
             d.text((j*oneCharWidth, i*oneCharHeight), getChar(h, charArray,interval),fill = (r, g, b))
     
-    output_path = f'{output_dir}/mosaic.jpg'
+    output_path = f'{output_dir}/mosaic.png'
     outputImage.save(output_path)
     return output_path
