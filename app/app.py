@@ -14,7 +14,7 @@ def upload_form():
         single_file = request.files['single_file']
         selected_filter = request.form['selected_filter']
 
-        template_path = os.path.join(app.root_path, 'static/filters/emoji')
+        template_path = os.path.join(app.root_path, 'static/filters/')
         start_time = time.time()
         output_url = apply_filter(single_file, temp_dir.name, selected_filter, template_path)
         execution_time = time.time() - start_time

@@ -16,11 +16,11 @@ def apply_filter(image, output_dir, filter_type, filter_file_path=''):
     if filter_type == 'ascii':
         return ascii_mosaicv4(image, output_dir)
     if filter_type == 'emoji':
-        tile_path = glob.glob(f'{filter_file_path}/*.png')
-        return image_mosaic(image, tile_path[:50], output_dir)
-    if filter_type == 'emojiv1':
-        tile_path = glob.glob(f'{filter_file_path}/*.png')
+        tile_path = glob.glob(f'{filter_file_path}emoji/*.png')
         return image_mosaic_v1(image, tile_path[:50], output_dir)
+    if filter_type == 'shapes':
+        tile_path = glob.glob(f'{filter_file_path}shapes/*.png')
+        return image_mosaic_v1(image, tile_path, output_dir)
 
 def getChar(value, charArray, interval):
     return charArray[int(value * interval)]
@@ -151,7 +151,7 @@ def image_mosaic(target_image_path, tile_images_path, output_dir, divisions=50, 
     img.save(output_path)
     return output_path
 
-def image_mosaic_v1(target_image_path, tile_images_path, output_dir, divisions=50, scale=2, opacity_percent=50):
+def image_mosaic_v1(target_image_path, tile_images_path, output_dir, divisions=100, scale=1, opacity_percent=50):
     target_image = Image.open(target_image_path)
     target_image = target_image.convert("RGB")
     original_width, original_height = target_image.size
