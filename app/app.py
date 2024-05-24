@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_file,send_from_directory
 import os
 import tempfile
 from filter import apply_filter
+import time
 
 app = Flask(__name__)
 
@@ -14,8 +15,11 @@ def upload_form():
         selected_filter = request.form['selected_filter']
 
         template_path = os.path.join(app.root_path, 'static/filters/emoji')
+        start_time = time.time()
         output_url = apply_filter(single_file, temp_dir.name, selected_filter, template_path)
+        execution_time = time.time() - start_time
         print(output_url)
+        print(f"filter: {selected_filter} \t Execution time: {execution_time:.6f} seconds")
         return send_file(output_url, as_attachment=True)
     
     return render_template('index.html')

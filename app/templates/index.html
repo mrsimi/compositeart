@@ -19,7 +19,6 @@
                 <label>select composition: </label> <br>
                 <select id="selected_filter" name="selected_filter">
                     <option value="ascii">ascii</option>
-                    <option value="emoji">emoji</option>
                 </select> <br> <br>
                 <input type="submit" value="generate mosaic" class="submit-btn"/>
             </form>
@@ -35,7 +34,7 @@
 <script>
     document.getElementById('single_file').addEventListener('change', function(event) {
         const file = event.target.files[0];
-        const maxSizeInBytes = 2 * 1024 * 1024; // 2MB in bytes
+        const maxSizeInBytes = 3 * 1024 * 1024; // 2MB in bytes
 
         if (file) {
             if (file.size > maxSizeInBytes) {
