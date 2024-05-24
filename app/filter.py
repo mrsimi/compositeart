@@ -5,16 +5,16 @@ from PIL import Image, ImageOps
 import random
 from io import BytesIO
 import glob 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
-def getChar(inputInt, charArray, interval):
-    return charArray[math.floor(inputInt*interval)]
+# def getChar(inputInt, charArray, interval):
+#     return charArray[math.floor(inputInt*interval)]
 
 def apply_filter(image, output_dir, filter_type, filter_file_path=''):
     print(f'image {image.filename} output_dir {output_dir} filter_type {filter_type}')
     if filter_type == 'ascii':
-        return ascii_mosaic(image, output_dir)
+        return ascii_mosaicv4(image, output_dir)
     if filter_type == 'emoji':
         tile_path = glob.glob(f'{filter_file_path}/*.png')
         return image_mosaic(image, tile_path[:50], output_dir)
@@ -22,13 +22,49 @@ def apply_filter(image, output_dir, filter_type, filter_file_path=''):
         tile_path = glob.glob(f'{filter_file_path}/*.png')
         return image_mosaic_v1(image, tile_path[:50], output_dir)
 
+def getChar(value, charArray, interval):
+    return charArray[int(value * interval)]
 
-def ascii_mosaic(image, output_dir):
-    chars = ' .`-_\':,;^=+/"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLunT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@KHDBWNMR0Q' #[::-1]
-    #chars = "#Wo- "[::-1]
+# def ascii_mosaic(image, output_dir):
+#     chars = ' .`-_\':,;^=+/"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLunT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@KHDBWNMR0Q'
+#     #chars = '.`-_\':,;^=+/"|)\\<>)iv'
+#     charArray = list(chars)
+#     charLength = len(charArray)
+#     interval = charLength / 256
+
+#     scaleFactor = 0.09
+#     oneCharWidth = 10
+#     oneCharHeight = 18
+
+#     image.flush()
+#     im = Image.open(image.stream)
+#     width, height = im.size
+#     im = im.resize((int(scaleFactor * width), int(scaleFactor * height * (oneCharWidth / oneCharHeight))), Image.NEAREST)
+#     width, height = im.size
+
+#     pix = np.array(im)
+#     gray = np.dot(pix[...,:3], [0.2989, 0.5870, 0.1140]).astype(int)
+    
+#     outputImage = Image.new('RGB', (oneCharWidth * width, oneCharHeight * height), color=(0, 0, 0))
+#     d = ImageDraw.Draw(outputImage)
+
+#     for i in range(height):
+#         for j in range(width):
+#             h = gray[i, j]
+#             char = getChar(h, charArray, interval)
+#             r, g, b = pix[i, j]
+#             d.text((j * oneCharWidth, i * oneCharHeight), char, fill=(r, g, b))
+
+#     output_path = f'{output_dir}/mosaic.png'
+#     outputImage.save(output_path)
+#     return output_path
+
+
+def ascii_mosaicv4(image, output_dir):
+    chars = ' .`-_\':,;^=+/"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLunT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@KHDBWNMR0Q'
     charArray = list(chars)
     charLength = len(charArray)
-    interval = charLength/256
+    interval = charLength / 256
 
     scaleFactor = 0.09
     oneCharWidth = 10
@@ -37,20 +73,30 @@ def ascii_mosaic(image, output_dir):
     image.flush()
     im = Image.open(image.stream)
     width, height = im.size
-    im = im.resize((int(scaleFactor*width), int(scaleFactor*height*(oneCharWidth/oneCharHeight))), Image.NEAREST)
+    im = im.resize((int(scaleFactor * width), int(scaleFactor * height * (oneCharWidth / oneCharHeight))), Image.NEAREST)
     width, height = im.size
-    pix = im.load()
-    outputImage = Image.new('RGB', (oneCharWidth * width, oneCharHeight * height), color = (0, 0, 0))
+
+    pix = np.array(im)
+    gray = np.dot(pix[..., :3], [0.2989, 0.5870, 0.1140]).astype(int)
+
+    outputImage = Image.new('RGB', (oneCharWidth * width, oneCharHeight * height), color=(0, 0, 0))
     d = ImageDraw.Draw(outputImage)
 
+    chars_array = np.vectorize(lambda h: getChar(h, charArray, interval))(gray)
+
+    # Prepare all text drawing commands
+    text_commands = []
     for i in range(height):
         for j in range(width):
-            r, g, b = pix[j, i]
-            h = int(r/3 + g/3 + b/3)
-            pix[j, i] = (h, h, h)
-            #text_file.write(getChar(h))
-            d.text((j*oneCharWidth, i*oneCharHeight), getChar(h, charArray,interval),fill = (r, g, b))
-    
+            char = chars_array[i, j]
+            r, g, b = pix[i, j]
+            position = (j * oneCharWidth, i * oneCharHeight)
+            text_commands.append((position, char, (r, g, b)))
+
+    # Execute drawing commands
+    for position, char, color in text_commands:
+        d.text(position, char, fill=color)
+
     output_path = f'{output_dir}/mosaic.png'
     outputImage.save(output_path)
     return output_path
