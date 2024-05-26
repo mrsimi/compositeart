@@ -28,8 +28,8 @@
 
     body {
         margin: 0px;
-        color: #f7f4e9;
-        background-color: #141414;
+        color: #fff;
+        background-color: #131212;
     }
 
     .container {
@@ -100,7 +100,7 @@
         text-decoration: none;
     }
     nav{
-        padding: 10px 25px;
+        padding: 25px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -109,6 +109,8 @@
     }
     .other-content{
         padding: 100px;
+        width: 60%;
+        margin: 0 auto;
     }
     
     @media screen and (max-width: 1200px) {
@@ -118,6 +120,7 @@
         }
         .other-content{
             padding: 30px;
+            width: 100%;
         }
         .firstpart,
         .secondpart {
@@ -146,11 +149,12 @@
 
 <body>
     <nav>
-        <p>photomosaic.xyz</p>
-        <p>about</p>
-        <div>
+        <a href="/">photomosaic.xyz</a>
+        <a href="/about">about</>
+        <a href="/policy">privacy policy</a>
+        <!-- <div>
             <a href="mailto:simi.photomosaic@gmail.com?Subject=Feedback%20for%20Photo%20Mosaic%20Creator">give feedback</a> <br>
-        </div>
+        </div> -->
     </nav>
     {% block content %} {% endblock %}
 </body>

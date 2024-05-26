@@ -117,7 +117,7 @@ def find_closest_images(given_image, image_list, k=3):
     closest_images = [image_list[idx] for idx in closest_indices]
     return random.choice(closest_images)
 
-def image_mosaic(target_image_path, tile_images_path, output_dir, divisions=50, scale=2, opacity_percent=50):
+def image_mosaic(target_image_path, tile_images_path, output_dir, divisions=60, scale=2, opacity_percent=50):
     target_image = Image.open(target_image_path)
     target_image = target_image.convert("RGB")
     original_width, original_height = target_image.size

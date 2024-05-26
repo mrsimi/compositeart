@@ -33,5 +33,13 @@ def page_not_found(error):
 def internal_error(error):
     return render_template('500.html'), 500
 
+@app.route("/policy", methods=['GET'])
+def policy_page():
+    return render_template('policy.html')
+
+@app.route("/about", methods=['GET'])
+def about_page():
+    return render_template('about.html')
+
 if __name__ == '__main__':
     app.run()
