@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, send_file,send_from_directory
 import os
 import tempfile
-from filter import apply_filter
+from filter_manager import apply_filter
 import time
 
 app = Flask(__name__)
@@ -11,12 +11,20 @@ def upload_form():
     temp_dir = tempfile.TemporaryDirectory()
 
     if request.method == 'POST':
+        #values = request.form.getlist()
         single_file = request.files['single_file']
         selected_filter = request.form['selected_filter']
+        opacity = request.form.get('selected_opacity')
+        divisions =request.form.get('selected_division')
+
+        print(f'filter: {selected_filter} \t opacity: {opacity} \t divisions; {divisions}')
+
+        opacity = 50 if opacity is None else int(opacity)
+        divisions = 100 if divisions is None else int(divisions)
 
         template_path = os.path.join(app.root_path, 'static/filters/')
         start_time = time.time()
-        output_url = apply_filter(single_file, temp_dir.name, selected_filter, template_path)
+        output_url = apply_filter(single_file, temp_dir.name, selected_filter, opacity=opacity, divisions=divisions, filter_file_path=template_path)
         execution_time = time.time() - start_time
         print(output_url)
         print(f"filter: {selected_filter} \t Execution time: {execution_time:.6f} seconds")

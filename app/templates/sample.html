@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR03MN9QRH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-ZR03MN9QRH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photomosaic</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@200..800&family=Raleway&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+    *,
+    input,
+    select {
+        font-family: "Raleway", sans-serif
+    }
+
+    body {
+        margin: 0px;
+        color: #fff;
+        background-color: #131212;
+    }
+
+    .container {
+        display: flex;
+        padding: 100px 200px;
+    }
+
+    .firstpart {
+        width: 50%;
+    }
+
+    .secondpart {
+        width: 50%;
+        display: flex;
+        justify-content: end;
+        align-items: end;
+        align-self: flex-start;
+        flex-direction: column;
+    }
+
+    .info,
+    label {
+        font-size: 20px;
+        text-transform: lowercase;
+    }
+
+    .info {
+        width: 70%;
+    }
+
+    .heading {
+        font-size: 45px;
+        font-family: "Ojuju", sans-serif;
+        font-optical-sizing: auto;
+        text-transform: lowercase;
+    }
+    .submit-btn{
+        padding: 10px 8px;
+        font-size: 24px;
+        color: #f7f4e9;
+        background-color: #1f1f1f;
+        border: 1px solid #f7f4e9;
+        width: 50%;
+    }
+
+    select{
+        padding: 10px 8px;
+        font-family: "Raleway", sans-serif;
+        width: 50%;
+    }
+
+    input::file-selector-button{
+        padding: 10px 8px;
+        font-family: "Raleway", sans-serif;
+    }
+
+    .feedback-btn{
+        color: #f7f4e9;
+        background-color: #1f1f1f;
+        float: right;
+        margin-bottom: 10px;
+        padding: 8px 15px;
+        border: 1px solid #f7f4e9;
+        font-size: 18px;
+    }
+    a{
+        color: #f7f4e9;
+        text-decoration: none;
+    }
+    nav{
+        padding: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        border-bottom: 1px solid #f7f4e9;
+    }
+    .other-content{
+        padding: 100px;
+        width: 60%;
+        margin: 0 auto;
+    }
+    .clickbtn{
+        padding: 10px 30px;
+        font-size: 20px;
+    }
+    
+    @media screen and (max-width: 1200px) {
+        .container {
+            flex-direction: column;
+            padding: 30px;
+        }
+        .other-content{
+            padding: 30px;
+            width: 100%;
+        }
+        .firstpart,
+        .secondpart {
+            width: 100%;
+        }
+
+        .heading {
+            padding-top: 20px;
+            font-size: 30px;
+        }
+
+        .info {
+            width: 100%;
+        }
+        select{
+            width: 100%;
+        }
+        .submit-btn{
+            width: 100%;
+        }
+        .secondpart{
+            display: none;
+        }
+    }
+</style>
+
+<body>
+    <nav>
+        <a href="/">photomosaic.xyz</a>
+        <a href="/about">about</>
+        <a href="/policy">privacy policy</a>
+       
+    </nav>
+    <div class="container">
+        <div class="firstpart">
+            <p style="font-family: 'Ojuju', sans-serif;">make your photos fun</p>
+            <p class="heading">turn your photos into cool art. <br>a photomosaic</p>
+            <p class="info">Turn your photos into art you can now frame in few steps. 
+                Watch your pictures go to become something <u>different</u>, <u>cool</u> and <u>exciting</u></p> <br>
+        
+                <form  id="index" action="/" method="post" enctype="multipart/form-data">
+                    <label for="">1. select your image:</label> <br>
+                    <input  id="single_file" type="file" name="single_file" onchange="validateSize(this)" accept="image/*"
+                    required> <br> <br>
+                    <span id="errorMessage" style="color: yellow;"></span> <br>
+                    <label>2. What should it contain?: </label> <br>
+                    <select id="selected_filter" name="selected_filter">
+                        <option value="emoji">emoji</option>
+                        <option value="shapes_dark">shapes - dark</option>
+                        <option value="shapes_light">shapes - light</option>
+                        <option value="ascii">ascii characters</option>
+                    </select> <br> <br>
+                    <label>3. Set how light the overlay would be: (works for everything aside ascii)</label> <br>
+                    <button class="clickbtn" onclick="decrease()">-</button>
+                    <span class="info" id="opacity">50</span>
+                    <button class="clickbtn" onclick="increase()">+</button>  <br> <br>
+                    <label>4. Set how granular it would be (works for everything aside ascii)</label> <br> 
+                    <button class="clickbtn" onclick="decreaseDiv()">-</button>
+                    <span class="info" id="divisions">50</span>
+                    <button class="clickbtn" onclick="increaseDiv()">+</button> 
+
+                    <input type="number" class="clickbtn" min=50 step=5 max=100 value="50">
+                    
+                    <br> <br>
+
+                    <input type="submit" value="download mosaic" class="submit-btn"/> <br> <br>
+                    <label>frame it, share it and tell everyone about it</label>
+                </form>
+    
+                <p style="padding: 50px 0px;">This app was created by <a href="https://twitter.com/0xfatherstreet">simi</a></span></p>
+        </div>
+        <div class="secondpart">
+    
+        <img class="sample-image" src="{{ url_for('static', filename='mosaic.jpg') }}">
+        </div>
+    </div>
+
+    <script>
+        let opacity = 40;
+        const minOpacity = 40;
+        const maxOpacity = 80;
+
+        function increase() {
+            if (opacity < maxOpacity) {
+                opacity+=5;
+                document.getElementById('opacity').textContent = opacity;
+            }
+        }
+
+        function decrease() {
+            if (opacity > minOpacity) {
+                opacity-=5;
+                document.getElementById('opacity').textContent = opacity;
+            }
+        }
+
+        let divisions = 50;
+        const minDivisions = 50;
+        const maxDivisions = 200;
+
+        function increaseDiv() {
+            if (divisions < maxDivisions) {
+                divisions+=5;
+                document.getElementById('divisions').textContent = divisions;
+            }
+        }
+
+        function decreaseDiv() {
+            if (divisions > minDivisions) {
+                divisions-=5;
+                document.getElementById('divisions').textContent = opacity;
+            }
+        }
+    </script>
+</body>
+
+</html>

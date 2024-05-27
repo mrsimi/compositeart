@@ -6,9 +6,9 @@
 <div class="container">
     <div class="firstpart">
         <p style="font-family: 'Ojuju', sans-serif;">make your photos fun</p>
-        <p class="heading">turn your photos into image of images</p>
-        <p class="info">Turn your photos into beautiful image of images (photomosaic) with our easy-to-use photo mosaic app. 
-            In two steps create something <u>magical</u>, <u>cool</u> and <u>beautiful</u></p> <br>
+            <p class="heading">turn your photos into cool art. <br>a photomosaic</p>
+            <p class="info">Turn your photos into art you can now frame in few steps. 
+                Watch your pictures go to become something <u>different</u>, <u>cool</u> and <u>exciting</u></p> <br>
     
             <form  id="index" action="/" method="post" enctype="multipart/form-data">
                 <label for="">1. select your image:</label> <br>
@@ -17,10 +17,18 @@
                 <span id="errorMessage" style="color: yellow;"></span> <br>
                 <label>2. What should it contain?: </label> <br>
                 <select id="selected_filter" name="selected_filter">
-                    <option value="ascii">ascii characters</option>
                     <option value="emoji">emoji</option>
-                    <option value="shapes">shapes</option>
+                    <option value="shapes_dark">shapes - dark</option>
+                    <option value="shapes_light">shapes - light</option>
+                    <option value="ascii">ascii characters</option>
                 </select> <br> <br>
+                <label>3. Set how light the overlay would be: (works for everything aside ascii)</label> <br>
+                <input id="selected_opacity" name="selected_opacity" min=40 step=5 max=90 value="50" type="number" class="clickbtn">  <br> <br>
+                <label>4. Set how granular it would be (works for everything aside ascii)</label> <br> 
+                <input id="selected_division" name="selected_division" min=50 step=5 max=200 value="50" type="number" class="clickbtn"> 
+                
+                <br> <br>
+
                 <input type="submit" value="download mosaic" class="submit-btn"/> <br> <br>
                 <label>frame it, share it and tell everyone about it</label>
             </form>
@@ -36,7 +44,7 @@
 <script>
     document.getElementById('single_file').addEventListener('change', function(event) {
         const file = event.target.files[0];
-        const maxSizeInBytes = 3 * 1024 * 1024; // 2MB in bytes
+        const maxSizeInBytes = 2 * 1024 * 1024; // 2MB in bytes
 
         if (file) {
             if (file.size > maxSizeInBytes) {
@@ -55,6 +63,50 @@
         }
     });
 
+    let opacity = 40;
+    const minOpacity = 40;
+    const maxOpacity = 80;
+
+    function increaseOpacity(event) {
+        event.preventDefault();
+        if (opacity < maxOpacity) {
+            opacity += 5;
+            document.getElementById('opacity').textContent = opacity;
+        }
+    }
+
+    function decreaseOpacity(event) {
+        event.preventDefault();
+        if (opacity > minOpacity) {
+            opacity -= 5;
+            document.getElementById('opacity').textContent = opacity;
+        }
+    }
+
+    let divisions = 50;
+    const minDivisions = 50;
+    const maxDivisions = 200;
+
+    function increaseDivisions(event) {
+        event.preventDefault();
+        if (divisions < maxDivisions) {
+            divisions += 5;
+            document.getElementById('divisions').textContent = divisions;
+        }
+    }
+
+    function decreaseDivisions(event) {
+        event.preventDefault();
+        if (divisions > minDivisions) {
+            divisions -= 5;
+            document.getElementById('divisions').textContent = divisions;
+        }
+    }
+
+    document.getElementById('increaseOpacity').addEventListener('click', increaseOpacity);
+    document.getElementById('decreaseOpacity').addEventListener('click', decreaseOpacity);
+    document.getElementById('increaseDivisions').addEventListener('click', increaseDivisions);
+    document.getElementById('decreaseDivisions').addEventListener('click', decreaseDivisions);
 </script>
 
 {% endblock %}
